@@ -89,6 +89,23 @@ export class AppComponent {
 
   displaySchedule(scheduleInput){
     console.log(`${scheduleInput} was displayed!`);
+
+    while((document.getElementById("scheduleView")).firstChild ){
+      (document.getElementById("scheduleView")).removeChild((document.getElementById("scheduleView")).firstChild );
+    }
+
+    this.http.get(`http://localhost:3000/api/schedules/${scheduleInput}`)
+    .subscribe(
+      (data:any[]) => {
+        console.log(data);
+        const l = document.getElementById('scheduleView');
+            //data.forEach(e => {
+                const item = document.createElement('li');
+                item.appendChild(document.createTextNode(`${JSON.stringify(data)}`));
+                l.appendChild(item);
+            //});
+      }
+    )
   }
   //End
 }
