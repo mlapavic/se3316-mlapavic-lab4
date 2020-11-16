@@ -1,0 +1,59 @@
+<h1>{{title}}</h1>
+<!-- <app-courses></app-courses> -->
+
+<div class="intro">
+    <h2> Courses & Descriptions </h2>
+    <span>
+        Subject Code: <input #searchSubject type="text" placeholder="Subject Code" >
+        Course Code: <input #searchCourse type="text" placeholder="Course Code">
+        Component: <input #searchComponent type="text" placeholder="Component">
+        <button (click)="getCourses(searchSubject.value,searchCourse.value,searchComponent.value)">Reload</button>
+    </span>
+    <!--<div *ngFor="let course of courses | async">
+        {{course | json}}
+    </div> -->
+    <ol id="timetables"></ol>
+</div>
+
+<div class="intro">
+    <h2> Schedule Creation & Course Adding</h2>
+    <span>
+        Create Schedule: Schedule Name: <input #scheduleN1 type="text" placeholder="New Schedule">
+        <button (click)="createSchedule(scheduleN1.value); scheduleN1.value=''">Create</button>
+        <p id="NoName"></p>
+    </span>        
+    <div>
+        -
+    </div>  
+    <div>
+        
+        Add To Schedule: Schedule Name: <input  #scheduleN2 type="text" placeholder="Schedule Name">
+        Subject Code: <input #subjectCode1 type="text" placeholder="Subject Code">
+        Course Code: <input  #courseCode1 type="text" placeholder="Course Code">
+        <button (click)="addCourse(scheduleN2.value,subjectCode1.value,courseCode1.value)">Add</button>
+    </div>
+</div>
+
+<div class="intro">
+    <h2> Schedule Deletion</h2>
+    <span>
+        Delete Schedule: Schedule Name: <input #scheduleN3 type="text" placeholder="Schedule Name">
+        <button (click)="deleteSchedule(scheduleN3.value)">Delete</button>
+    </span>
+    <div>
+        -
+    </div>  
+    <div>     
+        DELETE ALL: <button (click)="deleteAll()">DELETE ALL</button>
+    </div>
+
+</div>
+
+<div class="intro">
+    <h2> Current Schedule</h2>
+    <span>
+        DISPLAY SCHEDULE: Schedule Name <input input #scheduleN4 type="text" placeholder="Schedule Name">
+        <button (click)="displaySchedule(scheduleN4.value)">Display</button>
+    </span>
+    <ol id="scheduleView"></ol>
+</div>
