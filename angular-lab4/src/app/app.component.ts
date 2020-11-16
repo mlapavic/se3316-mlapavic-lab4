@@ -55,7 +55,19 @@ export class AppComponent {
   }
 
   createSchedule(scheduleInput){
+    while((document.getElementById("NoName")).firstChild ){
+      (document.getElementById("NoName")).removeChild((document.getElementById("NoName")).firstChild );
+    }
+    var paragraph = document.getElementById("NoName");
+
+    const notify = document.getElementById('NoName');
+    if (!scheduleInput) {
+      var text = document.createTextNode("Please input a name!");
+      paragraph.appendChild(text);
+      return;
+    }
     console.log(scheduleInput);
+    this.http.post(`http://localhost:3000/api/schedules/${scheduleInput}`,null).subscribe();
 }
 
   addCourse(scheduleInput,subjectInput,courseInput){
