@@ -79,6 +79,7 @@ export class AppComponent {
 
   deleteSchedule(scheduleInput){
     console.log(scheduleInput);
+    this.http.delete(`http://localhost:3000/api/schedules/${scheduleInput}`).subscribe();
   }
 
   deleteAll(){
