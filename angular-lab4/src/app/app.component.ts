@@ -26,7 +26,7 @@ export class AppComponent {
     
     //If the course input and component input is empty; search by subject alone 
     if(courseInput == "" && componentInput == ""){
-      this.http.get(`http://localhost:3000/api/courses/${subjectInput}`) //GET REQUEST
+      this.http.get(`/api/courses/${subjectInput}`) //GET REQUEST
       .subscribe(
         (data:any[]) => {
           console.log(data);
@@ -41,7 +41,7 @@ export class AppComponent {
         }
       )
     }else{ //Otherwise you may have the course code or the course code & componenent
-      this.http.get(`http://localhost:3000/api/courses/${subjectInput}/${courseInput}/${componentInput}`)
+      this.http.get(`/api/courses/${subjectInput}/${courseInput}/${componentInput}`)
       .subscribe(
         (data:any[]) => {
           console.log(data);
@@ -78,7 +78,7 @@ export class AppComponent {
     console.log(scheduleInput);
 
     //POST REQUEST to add a schedule
-    this.http.post(`http://localhost:3000/api/schedules/${scheduleInput}`,null).subscribe();
+    this.http.post(`/api/schedules/${scheduleInput}`,null).subscribe();
   }
 
   //Added function for adding subject/course pair
@@ -87,21 +87,21 @@ export class AppComponent {
     console.log(subjectInput);
     console.log(courseInput);
     //POST request to add subject course pair to schedule
-    this.http.post(`http://localhost:3000/api/schedules/${scheduleInput}/${subjectInput}/${courseInput}`,null).subscribe();
+    this.http.post(`/api/schedules/${scheduleInput}/${subjectInput}/${courseInput}`,null).subscribe();
   }
 
   //Added function for deleting schedule
   deleteSchedule(scheduleInput){
     console.log(scheduleInput);
     //DELETE REQUEST
-    this.http.delete(`http://localhost:3000/api/schedules/${scheduleInput}`).subscribe();
+    this.http.delete(`/api/schedules/${scheduleInput}`).subscribe();
   }
 
   //Added function to delete all schedules at once
   deleteAll(){
     console.log("All schedules deleted!");
     //DELETE REQUEST all schedules
-    this.http.delete(`http://localhost:3000/api/schedules`).subscribe();
+    this.http.delete(`/api/schedules`).subscribe();
   }
 
   //Added function to display a single schedule 
@@ -114,7 +114,7 @@ export class AppComponent {
     }
 
     //GET REQUEST of a single schedule
-    this.http.get(`http://localhost:3000/api/schedules/${scheduleInput}`)
+    this.http.get(`/api/schedules/${scheduleInput}`)
     .subscribe(
       (data:any[]) => {
         console.log(data);
