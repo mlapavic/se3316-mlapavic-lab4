@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {HttpClient } from '@angular/common/http'
+import {HttpClient } from '@angular/common/http' //Necessary for Http requests
 
 @Component({
   selector: 'app-root',
@@ -12,21 +12,26 @@ export class AppComponent {
 
   constructor(private http: HttpClient){ }
 
+  //Added function for get courses
   getCourses(subjectInput,courseInput,componentInput){
+    //While loop is made to make sure list does not continuously add
     while((document.getElementById("timetables")).firstChild ){
       (document.getElementById("timetables")).removeChild((document.getElementById("timetables")).firstChild );
     }
+
+    //Console log each of the user inputs for confirmation
     console.log(subjectInput);
     console.log(courseInput);
     console.log(componentInput);
     
+    //If the course input and component input is empty; search by subject alone 
     if(courseInput == "" && componentInput == ""){
-      this.http.get(`http://localhost:3000/api/courses/${subjectInput}`)
+      this.http.get(`http://localhost:3000/api/courses/${subjectInput}`) //GET REQUEST
       .subscribe(
         (data:any[]) => {
           console.log(data);
           const l = document.getElementById('timetables');
-              data.forEach(e => {
+              data.forEach(e => { //Go through the data array of the courses gain from B.E and add text
                   const item = document.createElement('li');
                   item.appendChild(document.createTextNode(`${e.subject} ${e.catalog_nbr} ${e.className} 
                   ${e.course_info[0].ssr_component} ${e.course_info[0].start_time} ${e.course_info[0].end_time}
@@ -35,13 +40,13 @@ export class AppComponent {
               });
         }
       )
-    }else{
+    }else{ //Otherwise you may have the course code or the course code & componenent
       this.http.get(`http://localhost:3000/api/courses/${subjectInput}/${courseInput}/${componentInput}`)
       .subscribe(
         (data:any[]) => {
           console.log(data);
           const l = document.getElementById('timetables');
-              data.forEach(e => {
+              data.forEach(e => { //Go through data array of the courses gained from B.E and add text
                   const item = document.createElement('li');
                   item.appendChild(document.createTextNode(`${e.subject} ${e.catalog_nbr} ${e.className} 
                   ${e.course_info[0].ssr_component} ${e.course_info[0].start_time} ${e.course_info[0].end_time}
@@ -54,7 +59,9 @@ export class AppComponent {
 
   }
 
+  //Added function for creating a schedule using F.E to B.E db.json file
   createSchedule(scheduleInput){
+    //Notification to input a name
     while((document.getElementById("NoName")).firstChild ){
       (document.getElementById("NoName")).removeChild((document.getElementById("NoName")).firstChild );
     }
@@ -66,34 +73,47 @@ export class AppComponent {
       paragraph.appendChild(text);
       return;
     }
-    console.log(scheduleInput);
-    this.http.post(`http://localhost:3000/api/schedules/${scheduleInput}`,null).subscribe();
-}
 
+    //Console log a schedule input
+    console.log(scheduleInput);
+
+    //POST REQUEST to add a schedule
+    this.http.post(`http://localhost:3000/api/schedules/${scheduleInput}`,null).subscribe();
+  }
+
+  //Added function for adding subject/course pair
   addCourse(scheduleInput,subjectInput,courseInput){
     console.log(scheduleInput);
     console.log(subjectInput);
     console.log(courseInput);
+    //POST request to add subject course pair to schedule
     this.http.post(`http://localhost:3000/api/schedules/${scheduleInput}/${subjectInput}/${courseInput}`,null).subscribe();
   }
 
+  //Added function for deleting schedule
   deleteSchedule(scheduleInput){
     console.log(scheduleInput);
+    //DELETE REQUEST
     this.http.delete(`http://localhost:3000/api/schedules/${scheduleInput}`).subscribe();
   }
 
+  //Added function to delete all schedules at once
   deleteAll(){
     console.log("All schedules deleted!");
+    //DELETE REQUEST all schedules
     this.http.delete(`http://localhost:3000/api/schedules`).subscribe();
   }
 
+  //Added function to display a single schedule 
   displaySchedule(scheduleInput){
     console.log(`${scheduleInput} was displayed!`);
 
+    //To make sure that the schedule being displayed switches 
     while((document.getElementById("scheduleView")).firstChild ){
       (document.getElementById("scheduleView")).removeChild((document.getElementById("scheduleView")).firstChild );
     }
 
+    //GET REQUEST of a single schedule
     this.http.get(`http://localhost:3000/api/schedules/${scheduleInput}`)
     .subscribe(
       (data:any[]) => {
